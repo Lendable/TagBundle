@@ -1,0 +1,8 @@
+parameters:
+#    alpha_entity_tagging.example.class: Alpha\EntityTaggingBundle\Example
+
+services:
+    alpha.tag_listever:
+        class: Alpha\TagBundle\EventListener\TagListener
+        tags:
+            - { name: doctrine.event_listener, event: preFlush }

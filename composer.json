@@ -1,0 +1,27 @@
+{
+  "name": "lendable/tag-bundle",
+  "type": "symfony-bundle",
+  "description": "tag entities",
+  "keywords": [
+    "tag",
+    "Symfony2"
+  ],
+  "homepage": "https://github.com/Lendable/TagBundle.git",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "The Lendable Team",
+      "email": "contact@lendable.co.uk"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2",
+    "symfony/framework-bundle": "~2.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "Alpha\\TagBundle": ""
+    }
+  },
+  "target-dir": "Alpha/TagBundle"
+}
