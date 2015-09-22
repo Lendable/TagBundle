@@ -11,7 +11,7 @@ trait Taggable
     /**
      * @ORM\ManyToMany(targetEntity="Alpha\TagBundle\Entity\Tag")
      */
-    protected $tags;
+    private $tags;
 
     /**
      * @return ArrayCollection|Tag[]
