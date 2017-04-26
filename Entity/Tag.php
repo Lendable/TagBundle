@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Tag
+ *
  * @package Alpha\TagBundle\Entity
  *
  * @ORM\Entity(repositoryClass="Alpha\TagBundle\Repository\TagRepository")
@@ -26,15 +27,15 @@ class Tag
 
     public function __construct($name = null)
     {
-        if (!is_null($name)) {
+        if (null !== $name) {
             $this->setName($name);
         }
     }
 
     /**
-     * Get id
+     * Gets the id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -42,9 +43,20 @@ class Tag
     }
 
     /**
-     * Set name
+     * Gets the name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the name.
      *
      * @param  string $name
+     *
      * @return Tag
      */
     public function setName($name)
@@ -52,15 +64,5 @@ class Tag
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 }

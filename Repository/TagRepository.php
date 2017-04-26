@@ -18,8 +18,7 @@ class TagRepository extends EntityRepository
         if ($existing instanceof Tag) {
             return $existing;
         } else {
-            $tag = new Tag();
-            $tag->setName($name);
+            $tag = new Tag($name);
             $this->_em->persist($tag);
 
             return $tag;

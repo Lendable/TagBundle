@@ -3,22 +3,28 @@
 namespace Alpha\TagBundle\Traits;
 
 use Alpha\TagBundle\Entity\Tag;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 trait Taggable
 {
     /**
+     * @var Collection|Tag[]
+     *
      * @ORM\ManyToMany(targetEntity="Alpha\TagBundle\Entity\Tag")
      */
     private $tags;
 
     /**
-     * @return ArrayCollection|Tag[]
+     * @return Collection|Tag[]
      */
     public function getTags()
     {
-        return $this->tags ?: new ArrayCollection();
+        if (!$this->tags instanceof Collection) {
+            throw new \RuntimeException(sprintf('The tags property must be initialized as an instance of %s', Collection::class));
+        }
+
+        return $this->tags;
     }
 
     /**
@@ -26,31 +32,60 @@ trait Taggable
      */
     public function addTag(Tag $tag)
     {
-        if (!$this->tags) {
-            $this->tags = new ArrayCollection();
+        if (!$this->tags instanceof Collection) {
+            throw new \RuntimeException(sprintf('The tags property must be initialized as an instance of %s', Collection::class));
         }
+
         if (!$this->getTags()->contains($tag)) {
-            $this->tags[] = $tag;
+            $this->tags->add($tag);
         }
     }
 
     public function removeTag(Tag $tag)
     {
-        if (!$this->tags) {
-            $this->tags = new ArrayCollection();
+        if (!$this->tags instanceof Collection) {
+            throw new \RuntimeException(sprintf('The tags property must be initialized as an instance of %s', Collection::class));
         }
 
         $this->tags->removeElement($tag);
     }
 
-    public function hasTag($name)
+    public function hasTag(string $name): bool
     {
+        if (!$this->tags instanceof Collection) {
+            throw new \RuntimeException(sprintf('The tags property must be initialized as an instance of %s', Collection::class));
+        }
+
+        $name = mb_strtolower($name);
+
         foreach ($this->getTags() as $tag) {
-            if ($tag->getName() == $name) {
+            if (mb_strtolower($tag->getName()) === $name) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Tag|null
+     */
+    public function getTag(string $name)
+    {
+        if (!$this->tags instanceof Collection) {
+            throw new \RuntimeException(sprintf('The tags property must be initialized as an instance of %s', Collection::class));
+        }
+
+        $name = mb_strtolower($name);
+
+        foreach ($this->getTags() as $tag) {
+            if (mb_strtolower($tag->getName()) === $name) {
+                return $tag;
+            }
+        }
+
+        return null;
     }
 }
