@@ -10,7 +10,7 @@ class TagListener
     {
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
-        $tagRepo = $em->getRepository("AlphaTagBundle:Tag");
+        $tagRepo = $em->getRepository('Alpha\TagBundle\Entity\Tag');
         $map = $uow->getIdentityMap();
         if ($map) {
             $entities = call_user_func_array('array_merge', $uow->getIdentityMap());
